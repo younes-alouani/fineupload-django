@@ -15,8 +15,8 @@ session = boto3.Session(
 S3 = session.resource( 's3' )
 
 
-def video_create_form( request ):
-    return render( request, 'video_create_form_view.html' )
+def add_project_attachements( request ):
+    return render( request, 'add_project_attachements.html' )
 
 
 @csrf_exempt
@@ -24,7 +24,7 @@ def success_redirect_endpoint( request ):
     """ This is where the upload will send a POST request after the
     file has been stored in S3.
     """
-    return make_response( 200 )
+    return make_response(200)
 
 
 @csrf_exempt
@@ -33,11 +33,12 @@ def handle_s3( request ):
     S3. You will need to adjust these paths/conditions based on your setup.
     """
     if request.method == "POST":
-        return handle_POST( request )
+        return handle_POST(request)
     elif request.method == "DELETE":
-        return handle_DELETE( request )
+        return handle_DELETE(request)
+    # add case to handle GET request to return list of files
     else:
-        return HttpResponse( status = 405 )
+        return HttpResponse(status=405)
 
 
 def handle_POST( request ):
